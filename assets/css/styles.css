@@ -1,0 +1,102 @@
+@font-face {
+    font-family: Savior;
+    src: url('/assets/fonts/Savior.ttf');
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body {
+    font-family: 'Savior', sans-serif;
+    font-size: 24px;
+    color: #333;
+    background-color: black;
+    color: white;
+}
+
+/* Header */
+header {
+
+    text-align: center;
+    padding: 1.2rem;
+}
+
+/* Main */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
+
+.container {
+    display: flex;
+    position: relative;
+    height: 300px;
+    border: solid;
+    border-image-slice: 6;
+    border-image-width: 6px;
+    border-image-source: url('/assets/images/border_frame.png');
+    margin-bottom: 1rem;
+}
+
+.container > img {
+    z-index: -1;
+}
+
+#territory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #fff;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    border: 3px solid #fff;
+    background-color: rgba(255, 255, 255, 0.40);
+    z-index: 1;
+}
+
+/* Color picker */
+
+#colorPicker {
+    background: transparent;
+    font-family: Savior;
+    font-size: 1.3rem;
+    color: white;
+    border: 1px solid white; 
+    border-radius: 5px;
+    margin-inline: 4px;
+    padding: 5px;
+}
+
+button {
+    font-family: Savior;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 5px 8px 5px 8px;
+    background: #83C73C;
+    border: 0;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #A8EB65;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1.2rem;
+}
+
