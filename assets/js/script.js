@@ -1,19 +1,23 @@
-function changeColor() {
-    let hexColor = document.getElementById("colorPicker").value;
-    if(hexColor.length != 6) {
-        alert("Only six-digit hex colors are allowed.");
-        throw "Only six-digit hex colors are allowed."
-    }
 
-    let matcher = hexColor.match(/.{1,2}/g);
-    let rgbColor = [
-        parseInt(matcher[0], 16),
-        parseInt(matcher[1], 16),
-        parseInt(matcher[2], 16)
-    ]
+let parent = document.getElementById("rgbPicker");
+let picker = new Picker(parent);
 
+let hexInput = document.getElementById("hexInput")
+let territory = document.getElementById("territory");
 
-    document.getElementById("territory").style.color = `rgb(${rgbColor[0]},${rgbColor[1]},${rgbColor[2]})`;
-    document.getElementById("territory").style.borderColor = `rgb(${rgbColor[0]},${rgbColor[1]},${rgbColor[2]})`;
-    document.getElementById("territory").style.background = `rgb(${rgbColor[0]},${rgbColor[1]},${rgbColor[2]}, 0.4)`;
+picker.setOptions({
+    editorFormat: "hex",
+    alpha: false,
+    color: "white",
+    popup: "bottom",
+})
+picker.onChange = function (color) {
+    let editedHslString = color.hslString.slice(0, -6) + "25%)";
+    territory.style.color = color.hex;
+    territory.style.borderColor = color.hex;
+    territory.style.backgroundColor = color.hex.slice(0, -2) + "66";
+    console.info(editedHslString);
+    territory.style.textShadow = `2px 2px 0 ${editedHslString}, 2px -2px 0 ${editedHslString}, -2px 2px 0 ${editedHslString}, -2px -2px 0 ${editedHslString}, 2px 0px 0 ${editedHslString}, 0px 2px 0 ${editedHslString}, -2px 0px 0 ${editedHslString}, 0px -2px 0 ${editedHslString}, 0px 0px 3px rgba(255,0,0,0)`
+    hexInput.value = color.hex.slice(0, -2)
+
 }

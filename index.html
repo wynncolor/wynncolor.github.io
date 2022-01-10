@@ -38,29 +38,35 @@
 
     <main>
       <section class="container">
-        <div id="territory">Detlas</div>
+        <div id="territory">TAG</div>
         <img
           src="./assets/images/detlas.png"
           alt="Map of Detlas"
           title="Map of Detlas"
         />
       </section>
-      <div class="colorChanger">
-        HEX Color value: #<input
+
+      <div id="rgbPicker">Click me to select a color</div>
+
+      <div class="colorPicker">
+        HEX Color value: <input
           type="text"
-          id="colorPicker"
-          name="colorPicker"
-          value="FFFFFF"
+          id="hexInput"
+          name="hexInput"
+          placeholder="#ffffff"
         />
-        <button onClick="changeColor();">Change color</button>
       </div>
     </main>
 
     <footer>
       <p>&copy; 2022 - Chromium</p>
-      <em>Not affiliated with Wynncraft or Wynntils.</em>
+      <small><em>Not affiliated with Wynncraft or Wynntils.</em></small>
     </footer>
 
+    <script src="https://unpkg.com/vanilla-picker@2">
+      import Picker from 'vanilla-picker/csp';
+      import 'vanilla-picker/dist/vanilla-picker.csp.css';
+    </script>
     <script src="assets/js/script.js"></script>
   </body>
 </html>
