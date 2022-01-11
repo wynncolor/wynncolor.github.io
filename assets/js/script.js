@@ -9,7 +9,7 @@ picker.setOptions({
     editorFormat: "hex",
     alpha: false,
     color: "white",
-    popup: "bottom",
+    popup: "right",
 })
 picker.onChange = function (color) {
     let hslStringArr = [...color.hslString.matchAll('hsl\\(([0-9]+(?:\\.[0-9]+)?), ?([0-9]+(?:\\.[0-9]+)?)%, ?([0-9]+(?:\\.[0-9]+)?)%\\)')]

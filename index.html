@@ -48,21 +48,22 @@
 
       <div id="rgbPicker">Click me to select a color</div>
 
-      <div class="colorPicker">
-        HEX Color value: <input
+      <section class="hexColor">
+        <p>HEX Color value: </p>
+        <input
           type="text"
           id="hexInput"
           name="hexInput"
-          placeholder="#ffffff"
+          value="#ffffff"
+          readonly="readonly"
         />
-      </div>
+      </section>
+
+      <section class="footer">
+        <p>&copy; 2022 - Chromium</p>
+         <small><em>Not affiliated with Wynncraft or Wynntils.</em></small>
+      </section>
     </main>
-
-    <footer>
-      <p>&copy; 2022 - Chromium</p>
-      <small><em>Not affiliated with Wynncraft or Wynntils.</em></small>
-    </footer>
-
     <script src="https://unpkg.com/vanilla-picker@2">
       import Picker from 'vanilla-picker/csp';
       import 'vanilla-picker/dist/vanilla-picker.csp.css';
