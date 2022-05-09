@@ -14,10 +14,10 @@ picker.setOptions({
 picker.onChange = function (color) {
     let hslStringArr = [...color.hslString.matchAll('hsl\\(([0-9]+(?:\\.[0-9]+)?), ?([0-9]+(?:\\.[0-9]+)?)%, ?([0-9]+(?:\\.[0-9]+)?)%\\)')]
     let textBorderColor;
-    if(parseFloat(hslStringArr[0][3]) == 0) {
+    if(parseFloat(hslStringArr[0][3]) === 0) {
         textBorderColor = "white";
-    } else if(parseFloat(hslStringArr[0][3]) == 100) {
-        textBorderColor == "black"
+    } else if(parseFloat(hslStringArr[0][3]) === 100) {
+        textBorderColor = "black"
     } else {
         textBorderColor = color.hslString.replace(/[0-9]+(\.[0-9]+)?%\)/,'25%)');
     }
