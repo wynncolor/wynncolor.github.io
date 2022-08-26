@@ -6,8 +6,7 @@ let territory = document.getElementById("territory");
 
 const isAllowedByWynntils = (rgbString) => {
     // TODO: convert to regex (too lazy to do it at 2AM)
-    let rgbClean = rgbString.slice(4, -1);
-    let rgb = rgbClean.split(",");
+    let rgb = rgbString.slice(4, -1).split(",");
     let r = rgb[0];
     let g = rgb[1];
     let b = rgb[2];
