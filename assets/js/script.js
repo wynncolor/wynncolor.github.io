@@ -1,9 +1,18 @@
-
 let parent = document.getElementById("rgbPicker");
 let picker = new Picker(parent);
 
 let hexInput = document.getElementById("hexInput")
 let territory = document.getElementById("territory");
+
+const isAllowedByWynntils = (rgbString) => {
+    // TODO: convert to regex (too lazy to do it at 2AM)
+    let rgbClean = rgbString.slice(4, -1);
+    let rgb = rgbClean.split(",");
+    let r = rgb[0];
+    let g = rgb[1];
+    let b = rgb[2];
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) >= 30 ? true : false;
+}
 
 picker.setOptions({
     editorFormat: "hex",
@@ -26,5 +35,7 @@ picker.onChange = function (color) {
     territory.style.backgroundColor = color.hex.slice(0, -2) + "66";
     territory.style.textShadow = `2px 2px 0 ${textBorderColor}, 2px -2px 0 ${textBorderColor}, -2px 2px 0 ${textBorderColor}, -2px -2px 0 ${textBorderColor}, 2px 0px 0 ${textBorderColor}, 0px 2px 0 ${textBorderColor}, -2px 0px 0 ${textBorderColor}, 0px -2px 0 ${textBorderColor}, 0px 0px 3px rgba(255,0,0,0)`
     hexInput.value = color.hex.slice(0, -2)
-
+    
+    let allowedByWynntils = document.getElementById("allowed");
+    isAllowedByWynntils(color.rgbString) ? allowedByWynntils.innerText = "Allowed" : allowedByWynntils.innerText = "Not allowed";
 }
