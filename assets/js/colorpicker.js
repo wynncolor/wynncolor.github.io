@@ -1,3 +1,5 @@
+let hexInput = document.getElementById("hex");
+
 const init = () => {
     setCopyrightYear();
 
@@ -17,17 +19,34 @@ const init = () => {
             }
         ]
     });
-    
-    colorPicker.on("color:change", color => {
-        document.getElementById("hex").innerHTML = color.hexString;
-        changeTerritory(color);
-        let allowedByWynntils = document.getElementById("allowed")
-        isAllowedByWynntils(color.rgb) ?  allowedByWynntils.innerHTML = "Allowed" : allowedByWynntils.innerHTML = "Not allowed";
-    });
+    colorPicker.on("color:change", onColorChange);
+    hexInput.addEventListener('keyup', changeColorByInput);
+}
+
+const onColorChange = color => {
+    hexInput.value = color.hexString;
+    validateHex(color.hexString);
+    changeTerritory(color);
+    isAllowedByWynntils(color);
+}
+
+const changeColorByInput = (event) => {
+    let inputVal = event.target.value;
+    validateHex(inputVal);
+
+    let color = {
+        rgb: tinycolor(inputVal).toRgb(),
+        hsl: tinycolor(inputVal).toHsl(),
+        hslString: tinycolor(inputVal).toHslString(),
+        hexString: tinycolor(inputVal).toHexString(),
+    }
+
+    changeTerritory(color);
+    isAllowedByWynntils(color);
 
 }
 
-const changeTerritory = (color) => {
+const changeTerritory = color => {
     let territory = document.getElementById("territory");
     let textBorderColor;
     if(color.hsl.l <= 30) {
@@ -44,13 +63,9 @@ const changeTerritory = (color) => {
 
     // Territory bg
     territory.style.borderColor = color.hexString;
-    territory.style.backgroundColor = color.rgbaString.slice(0, -2) + ".40)";
+    territory.style.backgroundColor = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},0.4)`;
+    console.log(color.rgbaString)
 
-}
-
-const setCopyrightYear = () => {
-    let yearEl = document.getElementById("year");
-    yearEl.innerHTML = new Date().getFullYear();
 }
 
 window.addEventListener("load", init);

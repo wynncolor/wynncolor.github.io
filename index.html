@@ -39,10 +39,12 @@
         <div id="territory">TAG</div>
         <img src="./assets/images/detlas.png" alt="Map of Detlas" title="Map of Detlas" />
       </section>
+
       <section class="colorPickerContainer itemBorder">
+        <h2>Choose a color:</h2>
         <div id="picker"></div>
         <p>Allowed by Wynntils?: <span id="allowed">Undetermined</span></p>
-        <p>Hex Value: <span id="hex">#000000</span></p>
+        <p>Hex Value: <input id="hex" placeholder="#000000"></input></p>
       </section>
     </div>
     <footer class="footer">
@@ -51,8 +53,9 @@
     </footer>
   </main>
   <script src="./assets/js/iro.min.js"></script>
+  <script src="./assets/js/tinycolor.min.js"></script>
   <script src="assets/js/utils.js"></script>
-  <script src="assets/js/script.js"></script>
+  <script src="assets/js/colorpicker.js"></script>
 </body>
 
 </html>
