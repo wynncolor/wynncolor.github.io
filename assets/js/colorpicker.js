@@ -49,12 +49,12 @@ const changeColorByInput = (event) => {
 const changeTerritory = color => {
     let territory = document.getElementById("territory");
     let textBorderColor;
-    if(color.hsl.l <= 30) {
+    if (color.hsl.l <= 30) {
         textBorderColor = "white";
-    } else if(color.hsl.l == 100) {
+    } else if (color.hsl.l == 100) {
         textBorderColor = "black"
     } else {
-        textBorderColor = color.hslString.replace(/[0-9]+(\.[0-9]+)?%\)/,'25%)');
+        textBorderColor = color.hslString.replace(/[0-9]+(\.[0-9]+)?%\)/, '25%)');
     }
 
     // Tag

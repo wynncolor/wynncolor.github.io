@@ -1,6 +1,6 @@
 "use strict";
 
-const checkLuma = ({r,g,b}) => (0.2126 * r + 0.7152 * g + 0.0722 * b) >= 30;
+const checkLuma = ({ r, g, b }) => (0.2126 * r + 0.7152 * g + 0.0722 * b) >= 30;
 
 const setCopyrightYear = () => {
     let yearEl = document.getElementById("year");
@@ -9,7 +9,7 @@ const setCopyrightYear = () => {
 
 const isAllowedByWynntils = color => {
     let allowedByWynntils = document.getElementById("allowed")
-    if(checkLuma(color.rgb)) {
+    if (checkLuma(color.rgb)) {
         allowedByWynntils.innerHTML = "Allowed";
         allowedByWynntils.style.color = "#5f5";
     } else {
