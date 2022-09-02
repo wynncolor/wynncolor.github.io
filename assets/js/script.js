@@ -1,40 +1,56 @@
-let parent = document.getElementById("rgbPicker");
-let picker = new Picker(parent);
+const init = () => {
+    setCopyrightYear();
 
-let hexInput = document.getElementById("hexInput")
-let territory = document.getElementById("territory");
+    let colorPicker = new iro.ColorPicker("#picker", {
+        width: 200,
+        display: "flex",
+        layoutDirection: "horizontal",
+        layout: [
+            {
+                component: iro.ui.Box
+            },
+            {
+                component: iro.ui.Slider,
+                options: {
+                    sliderType: "hue",
+                }
+            }
+        ]
+    });
+    
+    colorPicker.on("color:change", color => {
+        document.getElementById("hex").innerHTML = color.hexString;
+        changeTerritory(color);
+        let allowedByWynntils = document.getElementById("allowed")
+        isAllowedByWynntils(color.rgb) ?  allowedByWynntils.innerHTML = "Allowed" : allowedByWynntils.innerHTML = "Not allowed";
+    });
 
-const isAllowedByWynntils = (rgbString) => {
-    // TODO: convert to regex (too lazy to do it at 2AM)
-    let rgb = rgbString.slice(4, -1).split(",");
-    let r = rgb[0];
-    let g = rgb[1];
-    let b = rgb[2];
-    return (0.2126 * r + 0.7152 * g + 0.0722 * b) >= 30 ? true : false;
 }
 
-picker.setOptions({
-    editorFormat: "hex",
-    alpha: false,
-    color: "white",
-    popup: "right",
-})
-picker.onChange = function (color) {
-    let hslStringArr = [...color.hslString.matchAll('hsl\\(([0-9]+(?:\\.[0-9]+)?), ?([0-9]+(?:\\.[0-9]+)?)%, ?([0-9]+(?:\\.[0-9]+)?)%\\)')]
+const changeTerritory = (color) => {
+    let territory = document.getElementById("territory");
     let textBorderColor;
-    if(parseFloat(hslStringArr[0][3]) === 0) {
+    if(color.hsl.l <= 30) {
         textBorderColor = "white";
-    } else if(parseFloat(hslStringArr[0][3]) === 100) {
+    } else if(color.hsl.l == 100) {
         textBorderColor = "black"
     } else {
         textBorderColor = color.hslString.replace(/[0-9]+(\.[0-9]+)?%\)/,'25%)');
     }
-    territory.style.color = color.hex;
-    territory.style.borderColor = color.hex;
-    territory.style.backgroundColor = color.hex.slice(0, -2) + "66";
+
+    // Tag
+    territory.style.color = color.hexString;
     territory.style.textShadow = `2px 2px 0 ${textBorderColor}, 2px -2px 0 ${textBorderColor}, -2px 2px 0 ${textBorderColor}, -2px -2px 0 ${textBorderColor}, 2px 0px 0 ${textBorderColor}, 0px 2px 0 ${textBorderColor}, -2px 0px 0 ${textBorderColor}, 0px -2px 0 ${textBorderColor}, 0px 0px 3px rgba(255,0,0,0)`
-    hexInput.value = color.hex.slice(0, -2)
-    
-    let allowedByWynntils = document.getElementById("allowed");
-    isAllowedByWynntils(color.rgbString) ? allowedByWynntils.innerText = "Allowed" : allowedByWynntils.innerText = "Not allowed";
+
+    // Territory bg
+    territory.style.borderColor = color.hexString;
+    territory.style.backgroundColor = color.rgbaString.slice(0, -2) + ".40)";
+
 }
+
+const setCopyrightYear = () => {
+    let yearEl = document.getElementById("year");
+    yearEl.innerHTML = new Date().getFullYear();
+}
+
+window.addEventListener("load", init);

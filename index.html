@@ -1,76 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/css/styles.css" />
-    <!-- Primary Meta Tags -->
-    <title>Wynncolor</title>
-    <meta name="title" content="Wynncolor" />
-    <meta
-      name="description"
-      content="A small visualiser to see how your custom Wynntils guild color will look on their map!"
-    />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://wynncolor.github.io/" />
-    <meta property="og:title" content="Wynncolor" />
-    <meta
-      property="og:description"
-      content="A small visualiser to see how your custom Wynntils guild color will look on their map!"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- Primary Meta Tags -->
+  <title>Wynncolor</title>
+  <meta name="title" content="Wynncolor" />
+  <meta name="description"
+    content="A small visualiser to see how your custom Wynntils guild color will look on their map!" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://wynncolor.github.io/" />
-    <meta property="twitter:title" content="Wynncolor" />
-  </head>
-  <body>
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://wynncolor.github.io/" />
+  <meta property="og:title" content="Wynncolor" />
+  <meta property="og:description"
+    content="A small visualiser to see how your custom Wynntils guild color will look on their map!" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://wynncolor.github.io/" />
+  <meta property="twitter:title" content="Wynncolor" />
+</head>
+
+<body>
+  <main>
     <header>
-      <h1>Wynncolor</h1>
+      <h1>Wynn<span class="coloredText">color</span></h1>
       <p>
         A small project to visualise how your custom Wynntils guild color will
         look on their map.
       </p>
     </header>
-
-    <main>
-      <section class="container">
-        <div class="border"></div>
+    <div class="container">
+      <section class="territoryContainer paperBorder">
         <div id="territory">TAG</div>
-        <img
-          src="./assets/images/detlas.png"
-          alt="Map of Detlas"
-          title="Map of Detlas"
-        />
+        <img src="./assets/images/detlas.png" alt="Map of Detlas" title="Map of Detlas" />
       </section>
+      <section class="colorPickerContainer itemBorder">
+        <div id="picker"></div>
+        <p>Allowed by Wynntils?: <span id="allowed">Undetermined</span></p>
+        <p>Hex Value: <span id="hex">#000000</span></p>
+      </section>
+    </div>
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> - DevChromium</p>
+      <small><em>Not affiliated with <span>Wynncraft</span> or <span>Wynntils</span>.</em></small>
+    </footer>
+  </main>
+  <script src="./assets/js/iro.min.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/script.js"></script>
+</body>
 
-      <div id="rgbPicker" style="cursor: pointer;">Click me to select a color</div>
-      <p>Is allowed by Wynntils: <span id="allowed">Undetermined</span></p>
-      <section class="hexColor">
-        <p>HEX Color value: </p>
-        <input
-          type="text"
-          id="hexInput"
-          name="hexInput"
-          value="#ffffff"
-          readonly="readonly"
-        />
-      </section>
-
-      <section class="footer">
-        <p>&copy; 2022 - Chromium</p>
-         <small><em>Not affiliated with Wynncraft or Wynntils.</em></small>
-         <br>
-         <small><em>Grass and Dirt textures from <a href="https://wynncraft.com/">Wynncraft</a>. Map image from <a href="https://wynntils.com">Wynntils</a>.</em></small>
-      </section>
-    </main>
-    <script src="https://unpkg.com/vanilla-picker@2">
-      import Picker from 'vanilla-picker/csp';
-      import 'vanilla-picker/dist/vanilla-picker.csp.css';
-    </script>
-    <script src="assets/js/script.js"></script>
-  </body>
 </html>
