@@ -1,7 +1,7 @@
 "use strict";
 
 const checkLuma = ({ r, g, b }) => (0.2126 * r + 0.7152 * g + 0.0722 * b) >= 30;
-const checkClosestColor = (color, closestColor) => getDistanceBetweenColors(color, closestColor) >= 15;
+const checkClosestColor = (color, closestColor) => getDistanceBetweenColors(color, closestColor) >= 20;
 
 const setCopyrightYear = () => {
     let yearEl = document.getElementById("year");
