@@ -39,15 +39,21 @@
     </header>
     <div class="container">
       <section class="territoryContainer paperBorder">
-        <div id="territory">TAG</div>
+        <div class="territoryText" id="territory">TAG</div>
         <img src="./assets/images/detlas.png" alt="Map of Detlas" title="Map of Detlas" />
       </section>
 
       <section class="colorPickerContainer itemBorder">
         <h2>Choose a color:</h2>
         <div id="picker"></div>
-        <p>Allowed by Wynntils?: <span id="allowed">Undetermined</span></p>
-        <p>Hex Value: <input id="hex" placeholder="#000000"></input></p>
+        <span>Allowed by Wynntils?: <span id="allowed">Undetermined</span></span>
+        <span>Closest guild: <span id="closestGuild">Undetermined</span></span>
+        <span><label for="hex">Hex Value: </label><input id="hex" placeholder="#000000"></span>
+      </section>
+
+      <section class="territoryContainer paperBorder">
+        <div class="territoryText" id="closestExistingTerritory">TAG</div>
+        <img src="./assets/images/detlas.png" alt="Map of Detlas" title="Map of Detlas" />
       </section>
     </div>
     <footer class="footer">
