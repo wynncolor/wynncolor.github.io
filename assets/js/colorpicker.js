@@ -58,7 +58,7 @@ function changeTerritory(color) {
 
     // Territory bg
     territory.style.borderColor = color.toHexString();
-    territory.style.backgroundColor = `rgba(${color.toRgb().r},${color.toRgb().g},${color.toRgb().b},0.4)`;
+    territory.style.backgroundColor = `rgba(${color.toRgb().r},${color.toRgb().g},${color.toRgb().b},0.65)`;
 
     // Get closest existing territory info
     const closestExistingGuild = getClosestExistingGuild(color);
@@ -72,7 +72,7 @@ function changeTerritory(color) {
 
     // Closest existing territory bg
     closestExistingTerritory.style.borderColor = existingColor.toHexString();
-    closestExistingTerritory.style.backgroundColor = `rgba(${existingColor.toRgb().r},${existingColor.toRgb().g},${existingColor.toRgb().b},0.4)`;
+    closestExistingTerritory.style.backgroundColor = `rgba(${existingColor.toRgb().r},${existingColor.toRgb().g},${existingColor.toRgb().b},0.65)`;
 
     // Closest existing territory guild name and hex
     document.getElementById("closestGuild").innerText = rawExistingGuildName + " (" + existingColor.toHexString() + ")";
