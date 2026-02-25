@@ -1,11 +1,12 @@
 let hexInput = document.getElementById("hex");
 let existingColors;
+let colorPicker;
 
 const init = () => {
     setCopyrightYear();
     getExistingColors();
 
-    let colorPicker = new iro.ColorPicker("#picker", {
+    colorPicker = new iro.ColorPicker("#picker", {
         width: 200,
         display: "flex",
         layoutDirection: "horizontal",
@@ -21,8 +22,11 @@ const init = () => {
             }
         ]
     });
+
     colorPicker.on("color:change", onColorChange);
     hexInput.addEventListener('keyup', changeColorByInput);
+
+    applyInitialColorFromUrlOrDefault();
 }
 
 const onColorChange = color => {
@@ -37,6 +41,48 @@ const changeColorByInput = (event) => {
     if (validateHex(inputVal)) {
         changeColor(inputVal);
     }
+}
+
+function applyInitialColorFromUrlOrDefault() {
+    const initialHexFromUrl = getHexFromUrl();
+
+    if (initialHexFromUrl) {
+        colorPicker.color.set(initialHexFromUrl);
+        return;
+    }
+
+    hexInput.value = colorPicker.color.hexString;
+    changeColor(colorPicker.color.hexString);
+}
+
+function getHexFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const candidates = [
+        params.get('hex'),
+        params.get('color'),
+    ];
+
+    if (window.location.hash && window.location.hash.length > 1)
+        candidates.push(window.location.hash.substring(1));
+
+    for (const candidate of candidates) {
+        const normalizedHex = normalizeHex(candidate);
+        if (normalizedHex) return normalizedHex;
+    }
+
+    return null;
+}
+
+function normalizeHex(rawHex) {
+    if (typeof rawHex !== 'string') return null;
+
+    const trimmed = decodeURIComponent(rawHex).trim();
+    if (trimmed.length === 0) return null;
+
+    const prefixed = trimmed.startsWith('#') ? trimmed : `#${trimmed}`;
+    if (!/^#?[0-9a-f]{3}([0-9a-f]{3})?$/i.test(prefixed)) return null;
+
+    return tinycolor(prefixed).toHexString();
 }
 
 function changeColor(color) {
@@ -62,8 +108,13 @@ function changeTerritory(color) {
 
     // Get closest existing territory info
     const closestExistingGuild = getClosestExistingGuild(color);
+    if (!closestExistingGuild) {
+        document.getElementById("closestGuild").innerText = "Undetermined";
+        return null;
+    }
+
     const rawExistingGuildTag = closestExistingGuild.prefix;
-    const rawExistingGuildName = closestExistingGuild._id;
+    const rawExistingGuildName = closestExistingGuild.id ?? closestExistingGuild._id ?? closestExistingGuild.name ?? "Unknown Guild";
     const existingColor = tinycolor(closestExistingGuild.color);
 
     // Closest existing territory tag
@@ -84,7 +135,7 @@ function getExistingColors() {
     fetch("https://athena.wynntils.com/cache/get/guildListWithColors")
         .then(r => r.json())
         .then(data => {
-            // data is in the form of {"0": {"_id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}} and so on...
+            // data is in the form of {"0": {"id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}} and so on...
             // numbers may not be consistent
             existingColors = data;
         });
@@ -92,9 +143,11 @@ function getExistingColors() {
 
 /**
  * @param color {tinycolor} - color to check
- * @returns object in the form of {"_id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}
+ * @returns object in the form of {"id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}
  */
 function getClosestExistingGuild(color) {
+    if (!existingColors) return null;
+
     let closestColor = null;
     let closestDis = null;
 
