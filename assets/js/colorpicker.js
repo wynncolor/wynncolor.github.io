@@ -76,7 +76,14 @@ function getHexFromUrl() {
 function normalizeHex(rawHex) {
     if (typeof rawHex !== 'string') return null;
 
-    const trimmed = decodeURIComponent(rawHex).trim();
+    let decodedHex;
+    try {
+        decodedHex = decodeURIComponent(rawHex);
+    } catch {
+        return null;
+    }
+
+    const trimmed = decodedHex.trim();
     if (trimmed.length === 0) return null;
 
     const prefixed = trimmed.startsWith('#') ? trimmed : `#${trimmed}`;
@@ -113,20 +120,28 @@ function changeTerritory(color) {
         return null;
     }
 
-    const rawExistingGuildTag = closestExistingGuild.prefix;
+    const rawExistingGuildTag = closestExistingGuild.prefix ?? "TAG";
     const rawExistingGuildName = closestExistingGuild.id ?? closestExistingGuild._id ?? closestExistingGuild.name ?? "Unknown Guild";
     const existingColor = tinycolor(closestExistingGuild.color);
 
+    if (!existingColor.isValid()) {
+        document.getElementById("closestGuild").innerText = "Undetermined";
+        return null;
+    }
+
+    const existingHex = existingColor.toHexString();
+    const existingRgb = existingColor.toRgb();
+
     // Closest existing territory tag
     closestExistingTerritory.innerText = rawExistingGuildTag;
-    closestExistingTerritory.style.color = existingColor.toHexString();
+    closestExistingTerritory.style.color = existingHex;
 
     // Closest existing territory bg
-    closestExistingTerritory.style.borderColor = existingColor.toHexString();
-    closestExistingTerritory.style.backgroundColor = `rgba(${existingColor.toRgb().r},${existingColor.toRgb().g},${existingColor.toRgb().b},0.35)`;
+    closestExistingTerritory.style.borderColor = existingHex;
+    closestExistingTerritory.style.backgroundColor = `rgba(${existingRgb.r},${existingRgb.g},${existingRgb.b},0.35)`;
 
     // Closest existing territory guild name and hex
-    document.getElementById("closestGuild").innerText = rawExistingGuildName + " (" + existingColor.toHexString() + ")";
+    document.getElementById("closestGuild").innerText = rawExistingGuildName + " (" + existingHex + ")";
 
     return existingColor;
 }
@@ -138,6 +153,12 @@ function getExistingColors() {
             // data is in the form of {"0": {"id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}} and so on...
             // numbers may not be consistent
             existingColors = data;
+
+            // URL-preloaded colors can be applied before this fetch resolves.
+            // Re-run the current picker color once guild data is available.
+            if (colorPicker?.color?.hexString) {
+                changeColor(colorPicker.color.hexString);
+            }
         });
 }
 
@@ -152,10 +173,16 @@ function getClosestExistingGuild(color) {
     let closestDis = null;
 
     for (let existing in existingColors) {
-        const distance = getDistanceBetweenColors(color, tinycolor(existingColors[existing].color))
+        const guild = existingColors[existing];
+        if (!guild || typeof guild.color !== "string") continue;
+
+        const guildColor = tinycolor(guild.color);
+        if (!guildColor.isValid()) continue;
+
+        const distance = getDistanceBetweenColors(color, guildColor)
         if (closestDis == null || distance < closestDis) {
             closestDis = distance;
-            closestColor = existingColors[existing];
+            closestColor = guild;
         }
     }
 
