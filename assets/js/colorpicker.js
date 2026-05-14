@@ -147,7 +147,7 @@ function changeTerritory(color) {
 }
 
 function getExistingColors() {
-    fetch("https://athena.wynntils.com/cache/get/guildListWithColors")
+    fetch("https://athena.wynntils.com/cache/get/guildList")
         .then(r => r.json())
         .then(data => {
             // data is in the form of {"0": {"id": "Kingdom Foxes", "prefix": "Fox", "color": "#ff8200"}} and so on...
